@@ -41,7 +41,7 @@ def main():
     if not os.path.exists(checkpoint_path):
         os.makedirs(checkpoint_path)
     shutil.copy(args.config, os.path.join(checkpoint_path, os.path.basename(args.config)))
-    writer = SummaryWriter(log_dir=checkpoint_path)
+    writer = SummaryWriter(logdir=checkpoint_path)
     logger = get_logger(checkpoint_path)    # get logger and configure it at the first call
 
     logger.info(f"Arguments: {args}")
@@ -134,6 +134,7 @@ def main():
             trainer_module.optimizer_g.step()
 
             # Log and visualization
+            print(losses)
             log_losses = ['l1', 'ae', 'wgan_g', 'wgan_d', 'wgan_gp', 'g', 'd']
             if iteration % config['print_iter'] == 0:
                 time_count = time.time() - time_count
